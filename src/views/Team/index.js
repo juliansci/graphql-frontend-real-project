@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import PageTitle from '../../components/PageTitle';
 import TeamCard from '../../components/TeamCard';
-import { TeamsContainer } from './styled';
+import { TeamContainer } from './styled';
 
 const getTeamsQuery = gql`
   query GetTeams {
@@ -14,21 +14,18 @@ const getTeamsQuery = gql`
   }
 `;
 
-const HomePage = () => {
+const TeamPage = () => {
   const { loading, error, data } = useQuery(getTeamsQuery);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   const teams = data.getTeams;
   return <>
     <PageTitle>Teams</PageTitle>
-    <TeamsContainer>
-      {teams.map((team, i) => (
-        <TeamCard team={team} key={i} />
-      ))
-      }
-    </TeamsContainer>
+    <TeamContainer>
+      <TeamCard team={teams[0]} />
+    </TeamContainer>
   </>
 };
 
 
-export default HomePage;
+export default TeamPage;
